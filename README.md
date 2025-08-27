@@ -64,7 +64,7 @@
    - 可在网页中直接使用，如：`<img src="https://bing.wxhfywy.cn/api/random" alt="随机壁纸" />`。
 
 2. **每日一图 API**：
-   - 访问 `https://bing.liushen.fun/api/daily` 或者 `https://bing.wxhfywy.cn/daily.webp` 获取今日壁纸。
+   - 访问 `https://bing.wxhfywy.cn/api/daily` 或者 `https://bing.wxhfywy.cn/daily.webp` 获取今日壁纸。
    - 可在网页中直接使用，如：`<img src="https://bing.wxhfywy.cn/api/daily" alt="今日壁纸" />`。
 
 更多参数欢迎访问地址：[https://bing.wxhfywy.cn/api](https://bing.wxhfywy.cn/api) 进行查询。
