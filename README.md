@@ -1,7 +1,7 @@
 # 🌅 Daily Bing Image 自动更新项目
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/willow-god/daily-image/refs/heads/page/daily.webp" alt="Daily Bing Wallpaper" width="600" />
+  <img src="https://bing.wxhfywy.cn/daily.webp" alt="Daily Bing Wallpaper" width="600" />
 </p>
 
 这是一个基于 GitHub Actions 自动获取并展示 Bing 每日高清壁纸的项目。每天早上 6 点（中国时间）自动抓取最新壁纸，生成 WebP/JPEG 格式图片，维护最近 30 天的壁纸，并发布至 `page` 分支，用于 Pages 服务部署并展示。
@@ -53,21 +53,21 @@
 
 ## 🌍 在线预览地址
 
-- 🔗 **EO Pages 页面**：[https://bing.liushen.fun/](https://bing.liushen.fun/)
+- 🔗 **EO Pages 页面**：[https://bing.wxhfywy.cn/](https://bing.wxhfywy.cn/)
 
 ---
 
 ## 🛺 使用方式
 
 1. **随机图 API**：
-   - 访问 `https://bing.liushen.fun/api/random` 获取随机壁纸。
-   - 可在网页中直接使用，如：`<img src="https://bing.liushen.fun/api/random" alt="随机壁纸" />`。
+   - 访问 `https://bing.wxhfywy.cn/api/random` 获取随机壁纸。
+   - 可在网页中直接使用，如：`<img src="https://bing.wxhfywy.cn/api/random" alt="随机壁纸" />`。
 
 2. **每日一图 API**：
-   - 访问 `https://bing.liushen.fun/api/daily` 或者 `https://bing.liushen.fun/daily.webp` 获取今日壁纸。
-   - 可在网页中直接使用，如：`<img src="https://bing.liushen.fun/api/daily" alt="今日壁纸" />`。
+   - 访问 `https://bing.liushen.fun/api/daily` 或者 `https://bing.wxhfywy.cn/daily.webp` 获取今日壁纸。
+   - 可在网页中直接使用，如：`<img src="https://bing.wxhfywy.cn/api/daily" alt="今日壁纸" />`。
 
-更多参数欢迎访问地址：[https://bing.liushen.fun/api](https://bing.liushen.fun/api) 进行查询。
+更多参数欢迎访问地址：[https://bing.wxhfywy.cn/api](https://bing.wxhfywy.cn/api) 进行查询。
 
 ## 📜 License
 
