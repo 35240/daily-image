@@ -37,11 +37,11 @@ jobs:
 
     - name: Fetch page branch content into static/
       run: |
-        if git ls-remote --exit-code --heads origin page; then
-          git fetch origin page
+        if git ls-remote --exit-code --heads origin test; then
+          git fetch origin test
           rm -rf static
           mkdir static
-          git --work-tree=static checkout origin/page -- .
+          git --work-tree=static checkout origin/test -- .
         else
           echo "No 'page' branch exists, skipping fetch."
           mkdir -p static
@@ -58,10 +58,10 @@ jobs:
 
     - name: Commit and push to page branch
       run: |
-        cp -r ./page/. static/
+        cp -r ./test/. static/
         cd static
         git init
-        git checkout -b page
+        git checkout -b test
         git add .
         git commit -m "⏱️GitHub Action每日定时更新"
         git push --force https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git page
