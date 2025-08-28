@@ -2,8 +2,8 @@ name: Daily Get Bing Image
 
 on:
   schedule:
-    # 设置时区为中国时区 (UTC+8)，每天凌晨1点运行
-    - cron: "0 17 * * *"
+    # 设置时区为中国时区 (UTC+8)，每天中午12点运行
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 env:
@@ -37,11 +37,11 @@ jobs:
 
     - name: Fetch page branch content into static/
       run: |
-        if git ls-remote --exit-code --heads origin test; then
-          git fetch origin test
+        if git ls-remote --exit-code --heads origin page; then
+          git fetch origin page
           rm -rf static
           mkdir static
-          git --work-tree=static checkout origin/test -- .
+          git --work-tree=static checkout origin/page -- .
         else
           echo "No 'page' branch exists, skipping fetch."
           mkdir -p static
@@ -58,10 +58,10 @@ jobs:
 
     - name: Commit and push to page branch
       run: |
-        cp -r ./test/. static/
+        cp -r ./page/. static/
         cd static
         git init
-        git checkout -b test
+        git checkout -b page
         git add .
         git commit -m "⏱️GitHub Action每日定时更新"
         git push --force https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git page
