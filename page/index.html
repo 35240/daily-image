@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>每日一图 - 留存世间奇景</title>
+    <title>必应每日一图 - 留存世间奇景</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link
       rel="stylesheet"
@@ -427,14 +427,11 @@
       <a href="/" style="display: flex; align-items: center; margin: 0 5px 0 5px">
         <img src="favicon.ico" alt="Icon" class="menu-icon" />
       </a>
-      <a href="https://blog.liushen.fun/" class="menu-item" target="_blank"
-        >站长博客</a
+      <a href="https://status.wxhfywy.cn/" class="menu-item" target="_blank"
+        >运行状态</a
       >
-      <a href="https://www.liushen.fun/" class="menu-item" target="_blank"
-        >个人主页</a
-      >
-      <a href="https://github.com/willow-god" class="menu-item" target="_blank"
-        >GitHub</a
+      <a href="https://sou.wxhfywy.cn/" class="menu-item" target="_blank"
+        >搜索网站</a
       >
       <a href="/api" class="menu-item" target="_blank"
         >接口文档</a
@@ -458,7 +455,7 @@
         <div class="center-text">
           <h1>Bing每日一图</h1>
           <p>腾讯EO强力支持，实现每日一图接口，保存最近30天内的bing壁纸</p>
-          <p>由清羽飞扬进行维护，每日更新，每日精彩</p>
+          <p>由35240进行维护，每日更新，每日精彩</p>
         </div>
         <div class="date" id="hero-date"></div>
         <div class="copy" id="hero-copy"></div>
@@ -489,7 +486,10 @@
         本站已运行：<span id="running-days">计算中...</span> |
         距离下次更新：<span id="next-update">计算中...</span>
       </div>
-
+<div style="margin-bottom: 0.5em">
+  浙ICP备2024115105号-6
+</div>dia>
+      
       <div style="margin-bottom: 0.5em">
         Powered by
         <a
@@ -518,11 +518,7 @@
           rel="nofollow noopener noreferrer"
           >daily-image</a>
         | MIT License © <span id="year"></span> |
-        <a
-          href="https://www.liushen.fun/"
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-          >LiuShen</a>
+
       </div>
 
       <script>
@@ -532,7 +528,7 @@
         // 计算网站运行时间和下次更新时间
         function updateTimes() {
           // 网站开始运行的日期（请修改为您的网站上线日期）
-          const startDate = new Date('2025-4-20'); // 示例日期，请替换为实际上线日期
+          const startDate = new Date('2025-8-26'); // 示例日期，请替换为实际上线日期
           const now = new Date();
           
           // 计算已运行天数
@@ -541,8 +537,8 @@
           
           // 计算距离下次更新的时间
           const tomorrow = new Date(now);
-          tomorrow.setDate(tomorrow.getDate() + (now.getHours() >= 12 ? 1 : 0));
-          tomorrow.setHours(12, 0, 0, 0);
+          tomorrow.setDate(tomorrow.getDate() + (now.getHours() >= 0 ? 1 : 0));
+          tomorrow.setHours(1, 0, 0, 0);
           
           // 计算剩余时间
           let diff = tomorrow - now;
