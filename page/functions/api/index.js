@@ -205,7 +205,7 @@ export default async function onRequest(context) {
   <div class="container">
     <div class="hero">
       <h1><i class="fas fa-images"></i> 图片 API 服务</h1>
-      <p class="hero-subtitle">提供高性能的随机图像和每日图像接口，简单易用，支持多种格式</p>
+      <p class="hero-subtitle">提供高性能的已爬取的必应随机图像和每日图像接口，简单易用，简单又快速</p>
     </div>
     
     <div class="card">
