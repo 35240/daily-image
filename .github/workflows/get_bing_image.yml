@@ -2,7 +2,8 @@ name: Daily Get Bing Image
 
 on:
   schedule:
-    - cron: "0 5 * * *"
+    # 设置时区为中国时区 (UTC+8)，每天中午12点运行
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 env:
@@ -41,29 +42,14 @@ jobs:
           rm -rf static
           mkdir static
           git --work-tree=static checkout origin/page -- .
-          # 备份需要保留的文件（示例）
-          mkdir -p /tmp/backup
-          cp static/path/to/file /tmp/backup/file  # 替换为实际文件路径
         else
           echo "No 'page' branch exists, skipping fetch."
           mkdir -p static
         fi
-
-    - name: Cache protected file
-      uses: actions/cache@v4
-      id: cache-file
-      with:
-        path: /tmp/backup/file  # 缓存备份文件
-        key: ${{ runner.os }}-protected-file-${{ github.run_id }}
-        restore-keys: |
-          ${{ runner.os }}-protected-file-
+        ls
 
     - name: Run Python script to get Bing image
       run: python main.py
-
-    - name: Restore protected file (if cached)
-      if: steps.cache-file.outputs.cache-hit == 'true'
-      run: cp /tmp/backup/file static/path/to/file  # 恢复文件
 
     - name: Configure git
       run: |
