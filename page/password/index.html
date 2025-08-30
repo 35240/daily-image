@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>现代化密码生成器</title>
+    <title>密码生成器</title>
     <style>
         :root {
             --primary-color: #4361ee;
@@ -60,6 +60,7 @@
             width: 100%;
             max-width: 500px;
             transition: background-color 0.3s ease;
+            position: relative;
         }
         
         h1 {
@@ -251,6 +252,25 @@
             transition: color 0.3s ease;
         }
         
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -319,6 +339,10 @@
                 <div class="meter-fill" id="meter-fill"></div>
             </div>
             <div class="strength-text" id="strength-text">弱</div>
+        </div>
+        
+        <div class="footer">
+            <a href="https://beian.miit.gov.cn/" target="_blank">浙ICP备2024115105号-6</a>
         </div>
     </div>
     
