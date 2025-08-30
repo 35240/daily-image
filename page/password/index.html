@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>现代化密码生成器</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --bg-color: #f5f7fa;
+            --container-bg: white;
+            --text-color: #212529;
+            --border-color: #e9ecef;
+            --input-bg: #f8f9fa;
+        }
+        
+        .dark-mode {
+            --primary-color: #4895ef;
+            --secondary-color: #4361ee;
+            --accent-color: #3f37c9;
+            --light-color: #343a40;
+            --dark-color: #f8f9fa;
+            --success-color: #4bb543;
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color: #f8f9fa;
+            --border-color: #343a40;
+            --input-bg: #2d2d2d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            transition: background-color 0.3s ease;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+        
+        .password-display {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        #password {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 18px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            margin-bottom: 10px;
+            user-select: all;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .settings {
+            margin-bottom: 24px;
+        }
+        
+        .setting-group {
+            margin-bottom: 16px;
+        }
+        
+        .setting-group h3 {
+            margin-bottom: 12px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .range-container input[type="range"] {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--border-color);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .range-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .range-container span {
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 30px;
+            text-align: center;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            cursor: pointer;
+        }
+        
+        .generate-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .generate-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .strength-meter {
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .strength-meter h3 {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .meter-bar {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #dc3545;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .strength-text {
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--success-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="dark-mode-toggle" id="dark-mode-toggle">🌓</button>
+    
+    <div class="container">
+        <h1>密码生成器</h1>
+        
+        <div class="password-display">
+            <input type="text" id="password" readonly placeholder="生成的密码将显示在这里">
+            <button class="copy-btn" id="copy-btn">复制</button>
+        </div>
+        
+        <div class="settings">
+            <div class="setting-group">
+                <h3>密码长度</h3>
+                <div class="range-container">
+                    <input type="range" id="length" min="4" max="32" value="12">
+                    <span id="length-value">12</span>
+                </div>
+            </div>
+            
+            <div class="setting-group">
+                <h3>包含字符类型</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lowercase" checked>
+                        <label for="lowercase">小写字母 (a-z)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="uppercase" checked>
+                        <label for="uppercase">大写字母 (A-Z)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="numbers" checked>
+                        <label for="numbers">数字 (0-9)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="symbols" checked>
+                        <label for="symbols">特殊字符 (!@#$%^&*)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="generate-btn" id="generate-btn">生成密码</button>
+        
+        <div class="strength-meter" id="strength-meter">
+            <h3>密码强度</h3>
+            <div class="meter-bar">
+                <div class="meter-fill" id="meter-fill"></div>
+            </div>
+            <div class="strength-text" id="strength-text">弱</div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">密码已复制!</div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lengthSlider = document.getElementById('length');
+            const lengthValue = document.getElementById('length-value');
+            const lowercaseCheckbox = document.getElementById('lowercase');
+            const uppercaseCheckbox = document.getElementById('uppercase');
+            const numbersCheckbox = document.getElementById('numbers');
+            const symbolsCheckbox = document.getElementById('symbols');
+            const generateBtn = document.getElementById('generate-btn');
+            const passwordField = document.getElementById('password');
+            const copyBtn = document.getElementById('copy-btn');
+            const notification = document.getElementById('notification');
+            const strengthMeter = document.getElementById('strength-meter');
+            const meterFill = document.getElementById('meter-fill');
+            const strengthText = document.getElementById('strength-text');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            
+            // 检查本地存储中的深色模式设置
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.textContent = '🌞';
+            }
+            
+            // 切换深色模式
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                
+                if (isDarkMode) {
+                    darkModeToggle.textContent = '🌞';
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    darkModeToggle.textContent = '🌓';
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            
+            // 更新长度显示
+            lengthSlider.addEventListener('input', function() {
+                lengthValue.textContent = this.value;
+            });
+            
+            // 生成密码
+            generateBtn.addEventListener('click', function() {
+                const length = parseInt(lengthSlider.value);
+                const includeLower = lowercaseCheckbox.checked;
+                const includeUpper = uppercaseCheckbox.checked;
+                const includeNumbers = numbersCheckbox.checked;
+                const includeSymbols = symbolsCheckbox.checked;
+                
+                // 验证至少选择了一种字符类型
+                if (!includeLower && !includeUpper && !includeNumbers && !includeSymbols) {
+                    alert('请至少选择一种字符类型!');
+                    return;
+                }
+                
+                // 验证密码长度是否足够
+                if (length < 4) {
+                    alert('密码长度至少需要4位!');
+                    return;
+                }
+                
+                const password = generatePassword(length, includeLower, includeUpper, includeNumbers, includeSymbols);
+                passwordField.value = password;
+                
+                // 显示密码强度
+                showPasswordStrength(password);
+                strengthMeter.style.display = 'block';
+            });
+            
+            // 复制密码
+            copyBtn.addEventListener('click', function() {
+                if (!passwordField.value) {
+                    alert('请先生成密码!');
+                    return;
+                }
+                
+                passwordField.select();
+                document.execCommand('copy');
+                
+                // 显示通知
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000);
+            });
+            
+            // 密码生成函数
+            function generatePassword(length, includeLower, includeUpper, includeNumbers, includeSymbols) {
+                const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+                const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const numberChars = '0123456789';
+                const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+                
+                let allowedChars = '';
+                if (includeLower) allowedChars += lowercaseChars;
+                if (includeUpper) allowedChars += uppercaseChars;
+                if (includeNumbers) allowedChars += numberChars;
+                if (includeSymbols) allowedChars += symbolChars;
+                
+                let password = '';
+                for (let i = 0; i < length; i++) {
+                    const randomIndex = Math.floor(Math.random() * allowedChars.length);
+                    password += allowedChars[randomIndex];
+                }
+                
+                return password;
+            }
+            
+            // 密码强度评估
+            function showPasswordStrength(password) {
+                let strength = 0;
+                
+                // 长度评分
+                if (password.length >= 4) strength += 1;
+                if (password.length >= 8) strength += 1;
+                if (password.length >= 12) strength += 1;
+                if (password.length >= 16) strength += 1;
+                if (password.length >= 20) strength += 1;
+                
+                // 字符类型评分
+                if (/[a-z]/.test(password)) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^a-zA-Z0-9]/.test(password)) strength += 1;
+                
+                // 计算百分比 (0-9 映射到 0-100)
+                const percentage = Math.min(100, strength * 11.11);
+                
+                // 更新UI
+                meterFill.style.width = percentage + '%';
+                
+                // 设置颜色和文本
+                if (percentage < 40) {
+                    meterFill.style.backgroundColor = '#dc3545';
+                    strengthText.textContent = '弱';
+                    strengthText.style.color = '#dc3545';
+                } else if (percentage < 70) {
+                    meterFill.style.backgroundColor = '#fd7e14';
+                    strengthText.textContent = '中等';
+                    strengthText.style.color = '#fd7e14';
+                } else if (percentage < 90) {
+                    meterFill.style.backgroundColor = '#ffc107';
+                    strengthText.textContent = '强';
+                    strengthText.style.color = '#ffc107';
+                } else {
+                    meterFill.style.backgroundColor = '#28a745';
+                    strengthText.textContent = '非常强';
+                    strengthText.style.color = '#28a745';
+                }
+            }
+            
+            // 初始生成一个密码
+            generateBtn.click();
+        });
+    </script>
+</body>
+</html>
