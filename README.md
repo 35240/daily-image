@@ -1,7 +1,7 @@
 # 🌅 Daily Bing Image 自动更新项目
 
 <p align="center">
-  <img src="https://bing.wxhfywy.cn/daily.webp" alt="Daily Bing Wallpaper" width="600" />
+  <img src="https://raw.githubusercontent.com/willow-god/daily-image/refs/heads/page/daily.webp" alt="Daily Bing Wallpaper" width="600" />
 </p>
 
 这是一个基于 GitHub Actions 自动获取并展示 Bing 每日高清壁纸的项目。每天早上 6 点（中国时间）自动抓取最新壁纸，生成 WebP/JPEG 格式图片，维护最近 30 天的壁纸，并发布至 `page` 分支，用于 Pages 服务部署并展示。
