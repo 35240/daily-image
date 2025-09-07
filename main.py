@@ -144,7 +144,7 @@ def merge_and_update_images(new_images, existing_index):
         else:
             # 记录要删除的文件
             removed_files.add(os.path.join(PICTURE_FOLDER, item["filename"]))
-            logging.info(f"图片 {item['date']} 超过30天，标记为删除")
+            logging.info(f"图片 {item['date']} 超过60天，标记为删除")
     
     # 删除超过30天的旧图片
     for filepath in removed_files:
