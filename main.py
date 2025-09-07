@@ -133,8 +133,8 @@ def merge_and_update_images(new_images, existing_index):
     # 按日期排序(最新的在前面)
     combined_index.sort(key=lambda x: x["date"], reverse=True)
     
-    # 保留最近30天的数据
-    thirty_days_ago = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+    # 保留最近60天的数据
+    thirty_days_ago = (datetime.now() - timedelta(days=60)).strftime("%Y-%m-%d")
     filtered_index = []
     removed_files = set()
     
