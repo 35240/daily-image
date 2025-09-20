@@ -134,7 +134,7 @@ def merge_and_update_images(new_images, existing_index):
     combined_index.sort(key=lambda x: x["date"], reverse=True)
     
     # 保留最近60天的数据
-    thirty_days_ago = (datetime.now() - timedelta(days=60)).strftime("%Y-%m-%d")
+    thirty_days_ago = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
     filtered_index = []
     removed_files = set()
     
@@ -144,7 +144,7 @@ def merge_and_update_images(new_images, existing_index):
         else:
             # 记录要删除的文件
             removed_files.add(os.path.join(PICTURE_FOLDER, item["filename"]))
-            logging.info(f"图片 {item['date']} 超过60天，标记为删除")
+            logging.info(f"图片 {item['date']} 超过30天，标记为删除")
     
     # 删除超过30天的旧图片
     for filepath in removed_files:
