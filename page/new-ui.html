@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>必应每日一图 · 超级美化版</title>
+  <title>必应每日一图</title>
   <meta name="description" content="留存世间奇景，每日一张 Bing 壁纸，极致视觉享受。">
+  <meta property="og:title" content="必应每日一图 · 超级美化">
+  <meta property="og:image" id="og-image">
+  <meta property="og:description" content="由 35240 维护，腾讯 EdgeOne 加速，每日更新全球奇景。">
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f0f0f;
-      --card-bg: #1a1a1a;
-      --text: #f0f0f0;
-      --text-secondary: #b0b0b0;
+      --bg: #0a0a0a;
+      --card-bg: rgba(20, 20, 20, 0.6);
+      --text: #ffffff;
+      --text-secondary: #c0c0c0;
       --accent: #4dabf7;
-      --glow: rgba(77, 171, 247, 0.2);
-      --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      --glow: rgba(77, 171, 247, 0.4);
+      --transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     * {
@@ -25,67 +30,72 @@
     }
 
     body {
-      font-family: "Noto Sans SC", "Segoe UI", sans-serif;
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
       overflow-x: hidden;
       position: relative;
+      background-image: radial-gradient(circle at 10% 20%, rgba(77, 171, 247, 0.03) 0%, transparent 20%),
+                        radial-gradient(circle at 90% 80%, rgba(77, 171, 247, 0.02) 0%, transparent 25%);
     }
 
-    /* ============== 可选：粒子背景 ============== */
-    /*
-    #particles-js {
+    /* ============== 粒子背景容器 ============== */
+    #tsparticles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      opacity: 0.2;
+      pointer-events: none;
     }
-    */
 
     /* ============== 悬浮菜单 ============== */
     .floating-menu {
       position: fixed;
-      top: 24px;
-      left: 24px;
+      top: 28px;
+      left: 28px;
       z-index: 1001;
       display: flex;
-      gap: 8px;
-      padding: 8px;
-      background: rgba(30, 30, 30, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(15, 15, 15, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+                  inset 0 0 0 1px var(--glow);
+      transition: var(--transition);
     }
     .menu-item {
       display: flex;
       align-items: center;
-      padding: 6px 14px;
+      padding: 8px 16px;
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 0.92rem;
-      border-radius: 16px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 18px;
       transition: var(--transition);
+      position: relative;
     }
     .menu-item:hover {
       color: white;
-      background: rgba(255, 255, 255, 0.1);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px var(--glow);
     }
     .menu-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 6px;
+      width: 22px;
+      height: 22px;
+      margin-right: 8px;
       border-radius: 50%;
     }
 
-    /* ============== 移动端底部导航 ============== */
+    /* ============== 移动端导航 ============== */
     .mobile-nav {
       display: none;
     }
@@ -94,12 +104,12 @@
       .mobile-nav {
         display: flex;
         position: fixed;
-        bottom: 0;
+        bottom: env(safe-area-inset-bottom, 0);
         left: 0;
         width: 100%;
-        background: rgba(20, 20, 20, 0.95);
-        backdrop-filter: blur(12px);
-        padding: 10px 0;
+        background: rgba(12, 12, 12, 0.92);
+        backdrop-filter: blur(16px);
+        padding: 12px 0;
         justify-content: space-around;
         z-index: 1000;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -107,17 +117,17 @@
       .mobile-nav a {
         color: var(--text-secondary);
         text-align: center;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         text-decoration: none;
         display: flex;
         flex-direction: column;
         align-items: center;
-        transition: color 0.3s;
+        padding: 6px 0;
       }
       .mobile-nav a:hover { color: white; }
       .mobile-nav img {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         margin-bottom: 4px;
       }
     }
@@ -128,25 +138,32 @@
       height: 100vh;
       width: 100%;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
     }
     .hero img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.8s ease;
-    }
-    .hero:hover img {
-      transform: scale(1.03);
+      transition: transform 0.9s ease;
+      filter: brightness(0.85);
     }
     .overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 40%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 60px 40px;
+      padding: 70px 50px;
       color: white;
+      z-index: 2;
     }
     .center-text {
       position: absolute;
@@ -154,149 +171,161 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      max-width: 800px;
+      max-width: 850px;
       width: 100%;
       padding: 0 20px;
+      z-index: 3;
     }
     .center-text h1 {
-      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-size: clamp(2.4rem, 6.5vw, 4.5rem);
       font-weight: 300;
-      letter-spacing: 1.5px;
-      margin-bottom: 1.2rem;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      letter-spacing: 2px;
+      margin-bottom: 1.4rem;
+      text-shadow: 0 6px 25px rgba(0,0,0,0.7);
       opacity: 0;
-      animation: heroFadeIn 1.2s 0.3s forwards;
+      animation: heroText 1.3s 0.4s forwards;
     }
     .center-text p {
-      font-size: clamp(1rem, 3vw, 1.3rem);
-      margin: 0.6rem auto;
+      font-size: clamp(1.05rem, 3vw, 1.4rem);
+      margin: 0.7rem auto;
       opacity: 0;
-      animation: heroFadeIn 1s 0.6s forwards;
+      animation: heroText 1.1s 0.7s forwards;
     }
-    @keyframes heroFadeIn {
+    @keyframes heroText {
       to { opacity: 1; transform: translate(-50%, -50%) translateY(0); }
     }
     .hero .date, .hero .copy {
       opacity: 0;
-      animation: slideUp 0.8s 1s forwards;
+      animation: slideUp 0.9s 1.1s forwards;
     }
     @keyframes slideUp {
       to { opacity: 1; transform: translateY(0); }
     }
     .hero .date {
-      font-size: 2.2rem;
-      margin-bottom: 12px;
+      font-size: 2.4rem;
+      margin-bottom: 14px;
       font-weight: 300;
-      transform: translateY(20px);
+      transform: translateY(25px);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
     }
     .hero .copy {
-      font-size: 1.25rem;
-      max-width: 900px;
+      font-size: 1.35rem;
+      max-width: 950px;
       font-weight: 300;
-      transform: translateY(20px);
+      transform: translateY(25px);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
 
     /* ============== 一言 ============== */
     .yiyan {
-      padding: 50px 20px 30px;
+      padding: 60px 20px 40px;
       text-align: center;
       position: relative;
     }
     .yiyan-content {
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 24px 30px;
-      background: rgba(30, 30, 30, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      font-size: 1.3rem;
-      line-height: 1.8;
+      padding: 28px 36px;
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(14px);
+      font-size: 1.4rem;
+      line-height: 1.85;
       position: relative;
       color: var(--text);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: breathe 8s infinite alternate;
+    }
+    @keyframes breathe {
+      0% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+      100% { box-shadow: 0 10px 30px var(--glow); }
     }
     .yiyan-content::before,
     .yiyan-content::after {
       content: '';
       position: absolute;
-      width: 24px;
-      height: 24px;
-      border: 1.5px solid var(--accent);
-      border-radius: 4px;
+      width: 28px;
+      height: 28px;
+      border: 2px solid var(--accent);
+      border-radius: 6px;
     }
     .yiyan-content::before {
-      top: -12px;
-      left: -12px;
+      top: -14px;
+      left: -14px;
     }
     .yiyan-content::after {
-      bottom: -12px;
-      right: -12px;
+      bottom: -14px;
+      right: -14px;
     }
     .yiyan-signature {
-      margin-top: 20px;
+      margin-top: 24px;
       color: var(--text-secondary);
       font-style: italic;
+      font-size: 1.1rem;
     }
 
     /* ============== 历史图 ============== */
     .history-container {
-      padding: 60px 20px 40px;
+      padding: 70px 20px 50px;
     }
     .history {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 28px;
-      max-width: 1400px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 32px;
+      max-width: 1500px;
       margin: 0 auto;
     }
     .card {
       background: var(--card-bg);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
       transition: var(--transition);
       cursor: pointer;
       position: relative;
-      height: 280px;
+      height: 300px;
+      border: 1px solid rgba(255,255,255,0.05);
     }
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(77, 171, 247, 0.25);
+      transform: translateY(-12px);
+      box-shadow: 0 20px 50px var(--glow);
     }
     .card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 0.7s ease;
     }
     .card:hover img {
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
     .date-label, .copy-text {
       position: absolute;
-      bottom: 16px;
-      left: 16px;
+      bottom: 20px;
+      left: 20px;
       color: white;
-      font-size: 0.95rem;
-      background: rgba(0,0,0,0.6);
-      padding: 6px 14px;
-      border-radius: 20px;
-      backdrop-filter: blur(4px);
+      font-size: 1rem;
+      background: rgba(0,0,0,0.65);
+      padding: 8px 16px;
+      border-radius: 24px;
+      backdrop-filter: blur(6px);
       transition: var(--transition);
       opacity: 1;
       transform: translateY(0);
+      font-weight: 500;
     }
     .copy-text {
-      width: calc(100% - 32px);
+      width: calc(100% - 40px);
       text-align: center;
-      left: 16px;
-      border-radius: 12px;
+      left: 20px;
+      border-radius: 14px;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(12px);
     }
     .card:hover .date-label {
       opacity: 0;
-      transform: translateY(-10px);
+      transform: translateY(-12px);
     }
     .card:hover .copy-text {
       opacity: 1;
@@ -307,14 +336,14 @@
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(10, 10, 10, 0.92);
+      background: rgba(8, 8, 8, 0.94);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 2000;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s, visibility 0.4s;
+      transition: opacity 0.5s, visibility 0.5s;
     }
     .modal.active {
       opacity: 1;
@@ -324,8 +353,8 @@
       max-width: 95%;
       max-height: 90vh;
       opacity: 0;
-      transform: scale(0.92);
-      transition: transform 0.4s, opacity 0.4s;
+      transform: scale(0.9);
+      transition: transform 0.5s, opacity 0.5s;
     }
     .modal.active .modal-content {
       opacity: 1;
@@ -334,88 +363,115 @@
     .modal-img {
       max-width: 100%;
       max-height: 85vh;
-      border-radius: 12px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      border-radius: 16px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 0 1px var(--glow);
     }
     .modal-caption {
-      margin-top: 20px;
+      margin-top: 24px;
       text-align: center;
       color: white;
-      font-size: 1.2rem;
-      max-width: 900px;
+      font-size: 1.35rem;
+      max-width: 950px;
       padding: 0 20px;
+      font-weight: 400;
     }
     .modal-close {
       position: absolute;
-      top: 30px;
-      right: 30px;
-      background: rgba(0,0,0,0.4);
+      top: 36px;
+      right: 36px;
+      background: rgba(0,0,0,0.5);
       color: white;
-      width: 44px;
-      height: 44px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       border: none;
-      font-size: 1.8rem;
+      font-size: 2rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: var(--transition);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
     }
     .modal-close:hover {
-      background: rgba(255,255,255,0.2);
-      transform: rotate(90deg) scale(1.1);
+      background: rgba(77, 171, 247, 0.2);
+      transform: rotate(90deg) scale(1.15);
+      color: #fff;
     }
 
     /* ============== Footer ============== */
     footer {
-      background: #141414;
-      padding: 40px 20px;
+      background: rgba(10, 10, 10, 0.7);
+      padding: 50px 20px 40px;
       text-align: center;
       color: var(--text-secondary);
-      font-size: 0.95rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.98rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
     }
     footer a {
       color: var(--accent);
       text-decoration: none;
-      transition: color 0.3s;
+      transition: var(--transition);
     }
     footer a:hover {
       color: white;
       text-decoration: underline;
     }
     footer div {
-      margin: 8px 0;
+      margin: 10px 0;
     }
     .icp {
       font-weight: 600;
-      color: #ddd;
+      color: #e0e0e0;
+      letter-spacing: 1px;
     }
   </style>
 </head>
 <body>
 
-  <!--
-  <div id="particles-js"></div>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- 粒子背景 -->
+  <div id="tsparticles"></div>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
   <script>
-    particlesJS("particles-js", {
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
       particles: {
-        number: { value: 30, density: { enable: true, value_area: 800 } },
+        number: { value: 25, density: { enable: true, value_area: 800 } },
         color: { value: "#4dabf7" },
         shape: { type: "circle" },
-        opacity: { value: 0.2, random: true },
-        size: { value: 2, random: true },
-        line_linked: { enable: true, distance: 150, color: "#4dabf7", opacity: 0.1, width: 1 },
-        move: { enable: true, speed: 0.5 }
+        opacity: { value: 0.15, random: true },
+        size: { value: { min: 1, max: 3 }, random: true },
+        links: {
+          enable: true,
+          distance: 150,
+          color: "#4dabf7",
+          opacity: 0.08,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 0.8,
+          direction: "none",
+          random: true,
+          straight: false,
+          outModes: "out"
+        }
       },
-      interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "repulse" } } },
-      retina_detect: true
+      interactivity: {
+        detectsOn: "canvas",
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+          onClick: { enable: true, mode: "push" },
+          resize: true
+        }
+      },
+      detectRetina: true
     });
   </script>
-  -->
 
+  <!-- 导航 -->
   <nav class="floating-menu">
     <a href="/" class="menu-item"><img src="/favicon.ico" class="menu-icon">首页</a>
     <a href="https://status.wxhfywy.cn/" class="menu-item" target="_blank">状态</a>
@@ -431,30 +487,34 @@
     <a href="/api" target="_blank">API</a>
   </div>
 
+  <!-- Hero -->
   <div class="hero">
-    <img id="hero-img" src="image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWYxZjFmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvYWRpbmcuLi48L3RleHQ+PC9zdmc+" alt="Bing Wallpaper">
-    <div class="overlay">
-      <div class="center-text">
-        <h1>必应每日一图</h1>
-        <p>腾讯 EdgeOne 强力加速 · 留存世间奇景</p>
-        <p>由 35240 维护 · 每日更新 · 极致视觉</p>
+    <div class="hero-inner">
+      <img id="hero-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGQwZDBkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZmlsbD0iIzMzMzMzMyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvYWRpbmcuLi48L3RleHQ+PC9zdmc+" alt="Bing Wallpaper">
+      <div class="overlay">
+        <div class="center-text">
+          <h1>必应每日一图</h1>
+          <p>腾讯 EdgeOne 全球加速 · 留存世间奇景</p>
+          <p>由 35240 精心维护 · 每日更新 · 极致视觉体验</p>
+        </div>
+        <div class="date" id="hero-date"></div>
+        <div class="copy" id="hero-copy"></div>
       </div>
-      <div class="date" id="hero-date"></div>
-      <div class="copy" id="hero-copy"></div>
     </div>
   </div>
 
+  <!-- 一言 -->
   <div class="yiyan">
-    <div class="yiyan-content" id="yiyan-text">
-      <span class="loading">· · ·</span>
-    </div>
+    <div class="yiyan-content" id="yiyan-text">· · ·</div>
     <div class="yiyan-signature">—— 送给素不相识的陌生人</div>
   </div>
 
+  <!-- 历史图 -->
   <div class="history-container">
     <div class="history" id="history"></div>
   </div>
 
+  <!-- 页脚 -->
   <footer>
     <div>网站总请求量：<span id="vercount_value_site_pv">—</span> | 独立访客：<span id="vercount_value_site_uv">—</span></div>
     <div>本站已运行：<span id="running-days">—</span> | 下次更新：<span id="next-update">—</span></div>
@@ -476,7 +536,6 @@
         const now = new Date();
         const days = Math.floor((now - start) / 864e5);
         document.getElementById('running-days').textContent = `${days} 天`;
-
         const next = new Date(now);
         next.setHours(1, 0, 0, 0);
         if (now.getHours() >= 1) next.setDate(next.getDate() + 1);
@@ -501,29 +560,39 @@
     </div>
   </div>
 
+  <!-- 音效（可选） -->
+  <audio id="type-sound" preload="auto">
+    <source src="data:audio/mpeg;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTGFTb25vdGhlcXVlLm9yZwBURU5DAAAAHQAAA1N3aXRjaCBQbHVzIMKpIE5DSCBTb2Z0d2FyZQBUSVQyAAAABgAAAzIyMzUAVFNTRQAAAA8AAANMYXZmNTcuODMuMTAwAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mpeg">
+  </audio>
+
   <script>
-    // 工具函数
+    // 工具
     const loadImage = (el, src) => {
       const img = new Image();
       img.onload = () => {
         el.src = src;
-        el.style.filter = 'blur(0)';
+        el.style.filter = 'blur(0) brightness(1)';
         el.style.opacity = '1';
       };
       img.src = src;
     };
 
-    const typeText = (el, text, cb) => {
+    // 打字机 + 音效
+    const typeText = (el, text) => {
       el.innerHTML = '';
+      const audio = document.getElementById('type-sound');
       let i = 0;
       const timer = setInterval(() => {
         if (i < text.length) {
           el.textContent += text[i++];
+          if (i % 3 === 0 && audio) {
+            audio.currentTime = 0;
+            audio.play().catch(() => {}); // 静音时忽略
+          }
         } else {
           clearInterval(timer);
-          cb && cb();
         }
-      }, 60);
+      }, 70);
     };
 
     // 一言
@@ -532,9 +601,10 @@
       .then(r => r.json())
       .then(d => {
         if (d.code === 200) {
-          typeText(yiyanEl, d.data, () => {
-            yiyanEl.style.transition = 'opacity 1s';
-          });
+          typeText(yiyanEl, d.data);
+          // 更新 OG 图
+          const ogImg = document.querySelector('meta[property="og:image"]');
+          if (ogImg) ogImg.content = '/picture/today.jpg';
         } else throw new Error();
       })
       .catch(() => {
@@ -552,10 +622,12 @@
       modalCap.textContent = caption;
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('active'), 10);
+      // 触觉反馈（移动端）
+      if ('vibrate' in navigator) navigator.vibrate(20);
     };
     const closeModal = () => {
       modal.classList.remove('active');
-      setTimeout(() => modal.style.display = 'none', 400);
+      setTimeout(() => modal.style.display = 'none', 500);
     };
     closeBtn.onclick = closeModal;
     modal.onclick = (e) => e.target === modal && closeModal();
@@ -570,10 +642,11 @@
         const today = data[0];
         document.getElementById('hero-date').textContent = today.date;
         document.getElementById('hero-copy').textContent = today.copyright;
+
         const heroImg = document.getElementById('hero-img');
-        heroImg.style.filter = 'blur(10px)';
+        heroImg.style.filter = 'blur(12px) brightness(0.7)';
         heroImg.style.opacity = '0';
-        heroImg.style.transition = 'filter 1s, opacity 1s';
+        heroImg.style.transition = 'filter 1.2s, opacity 1.2s';
         loadImage(heroImg, today.path);
 
         const container = document.getElementById('history');
@@ -582,15 +655,15 @@
             const card = document.createElement('div');
             card.className = 'card';
             card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.8s, transform 0.8s';
+            card.style.transform = 'translateY(40px)';
+            card.style.transition = 'opacity 0.9s, transform 0.9s';
 
             const img = document.createElement('img');
             img.alt = item.copyright;
-            img.style.filter = 'blur(8px)';
+            img.style.filter = 'blur(10px)';
             img.style.opacity = '0';
-            img.style.transition = 'filter 0.8s, opacity 0.8s, transform 0.6s';
-            img.src = "image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWYxZjFmIi8+PC9zdmc+";
+            img.style.transition = 'filter 0.9s, opacity 0.9s, transform 0.7s';
+            img.src = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGQwZDBkIi8+PC9zdmc+";
 
             const dateLabel = document.createElement('div');
             dateLabel.className = 'date-label';
@@ -610,8 +683,8 @@
             setTimeout(() => {
               card.style.opacity = '1';
               card.style.transform = 'translateY(0)';
-            }, 50);
-          }, i * 100);
+            }, 60);
+          }, i * 120);
         });
       });
   </script>
