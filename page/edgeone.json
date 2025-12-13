@@ -23,7 +23,7 @@
       "source": "/picture/*.webp",
       "cacheTtl": 864000
     }
-  ]
+  ],
   "headers": [
     {
       "source": "/*",
